@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="author" content="Alluminox Devellopers "/>
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">	
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	
+	<style>
+		nav {
+			padding: 0 1.5rem;
+		}
+		
+		.btn-icon {
+			padding: 0 1rem;
+		}
+		
+		.btn-block {
+			display-block: width: 100%;
+		}
+		
+		.title {
+			padding: 1rem 0;
+			display: block;
+			border-bottom: 1px solid #dedede;
+			margin-bottom: 2rem;
+		}
+		
+		.container {
+			width: 95%;
+			padding: 1rem 0 2rem 0;
+		}
+		
+		.table, .title {
+			margin-top: 1rem;
+		}
+		
+		
+		
+		
+		
+		footer {
+			text-align: center;
+			padding: 1rem;
+			margin-top: 2rem;
+			
+		}
+		
+		nav {
+			background-color: #444444;
+		}
+		
+		li.disabled {
+			pointer-events: none !important;
+			background-color: 3f1f1f1;
+		}
+		
+		li.disabled a {
+			color: #555;
+		}
+		
+		.dropdown-logout {
+			padding: 1rem;
+		}
+		
+		.dropdown-logout button {
+			display: block;
+			width: 100%;
+		}
+		
+		.brand-logo {
+			font-size: 1.4rem!important;
+			text-transform: uppercase;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<header th:fragment="header">
+	
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a th:href="@{/user/profile/} +${#authentication.principal.publicId}">Profile</a></li>
+			<li class="disabled" ><a href='#' >Transfer</a></li>
+			<li class="divider"></li>
+			<li class="dropdown-logout">
+				<form method="post" th:action="@{/logout}" id="logoutForm">
+					<button 
+						onclick="document.getElementById('logoutForm').submit()"
+						
+						class="btn blue btn-small" type="submit">Sign Out</button>
+				</form>
+			</li>
+		</ul>
+					
+		<nav>
+			<div class="nav-wrapper">
+				<a th:href="@{/home}" class="brand-logo">Fidelium</a>
+				<ul class="right hide-on-me-and-down" id="nav-mobile">
+				
+					<li sec:authorize="hasRole('ROLE_ADMIN')">
+						<a th:href="@{/user}">Users <span class="purple white-text badge">Admin</span></a>
+					</li>
+					
+					<li>
+						<a th:href="@{/reward/} + ${#authentication.getPrincipal().publicId} + '/list'">Rewards</a>
+					</li>
+					
+					<li>
+						<a class="dropdown-button" href="#!" data-activates="dropdown1" >
+							<span sec:authentication="name"></span>
+							<i class="material-icons right">arrow_drop_down</i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	
+	
+	
+	<footer th:fragment="footer" class="container">
+           <span>© 2019 Alluminox Devellopers . Todos os Direitos Reservados</span>
+	</footer>
+	
+	<script>
+		$(document).ready(function() {
+			$(".dropdown-trigger").dropdown();
+			$("select").material_select();
+		})
+	</script>
+</body>
+
+</html>

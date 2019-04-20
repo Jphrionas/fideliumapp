@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+	<header th:replace="layout/dashboardLayout :: header"></header>
+	<div class="container">
+	<span th:if="${successMessage}" th:text="${sucessMessage}"></span>
+	<span th:if="${infoMessage}" th:text="${infoMessage}"></span>
+	
+		<div class="card">
+			<div class="card-content" th:if="${not #lists.isEmpty(rewards)}">
+				<span class="card-title" th:text="${title}"></span>
+		<table class="light highlight" >
+			<thead>
+				<tr>
+					<th>Reward</th>
+					<th>Descrição</th>
+					<th>Quantidade Pontos</th>
+					<th>Espiration</th>
+					<th>Remove</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="reward : ${rewards}">
+					<td th:text="${reward.publicId}"></td>
+					<td th:text="${reward.descricao}"></td>
+					<td th:text="${reward.quantidadePontos}"></td>
+					<td th:text="${reward.expirationDate}"></td>
+					<td ><a onclick="return confirm('Deseja remover o reward?')" class=" btn-icon btn red" th:href="@{/reward/} + ${reward.publicId} + '/remove'" >
+						<i class="material-icons">delete</i>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+				
+			</div>
+			<div class="card-action">
+				<a class="btn blue" th:href="@{/reward/} + ${#authentication.getPrincipal().publicId} + '/new'" th:text="'New Reward'"></a>
+			</div>
+		</div>		
+	</div>	
+		
+	
+	<footer th:replace="layout/dashboardLayout :: footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+
+	<header th:replace="layout/dashboardLayout :: header"></header>
+	<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
+	
+	<div class="container">
+		<span class="flow-text title" th:text="${title}"></span>
+
+		<div class="row">
+			<div class="col s6 right">
+				<div class="input-field col s12">
+					<div th:text="${reward.user.publicId}"></div>
+					<div th:text="${reward.user.nome}"></div>
+				</div>
+					
+			</div>
+		
+			<div class="col s6 ">
+		
+				<form  method="post" 
+					th:action="@{/reward/} + ${reward.user.publicId} + '/new'" 
+					th:object="${reward}">
+					
+					<div class="input-field col s12">
+						<label>Reward Type</label>
+						<input type="text" th:field="*{rewardType}"/>
+					</div>
+					
+					<div class="input-field col s12">
+						<label>Quantidade Pontos</label>
+						<input type="text" th:field="*{quantidadePontos}"/>
+					</div>
+					
+						
+					<div class="input-field col s12">
+						<label>Descrição</label>
+						<textarea  class="materialize-textarea" th:field="*{descricao}"></textarea>
+					</div>
+					
+					<div class="input-field col s12">
+						<button class="btn green" type="submit">Enviar <i class="material-icons right">check</i></button>
+					</div>
+				</form>
+		
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+
+	<header th:replace="layout/dashboardLayout :: header"></header>
+		
+		<div class="container">
+			<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
+			<div th:if="${infoMessage}" th:text="${sucessMessage}"></div>
+			<div th:if="${warningMessage}" th:text="${warningMessage}"></div>
+			<div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+			
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" th:text="${title}"></span>
+					
+					  <ul class="collection">
+					    <li class="collection-item">Nome: <span th:text="${user.nome}"></span></li>
+					    <li class="collection-item" >E-mail: <span th:text="${user.email}"></span></li>
+					    <li class="collection-item" >Cpf: <span th:text="${user.cpf}"></span></li>
+					    <li class="collection-item" >Dob <span th:text="${user.dob}"></span></li>
+					    <li class="collection-item" >Celular<span th:text="${user.celular}">Celular</span></li>
+					    <li class="collection-item" >Sexo: <span th:text="${user.genero}"></span></li>
+					  </ul>
+				</div>
+			</div>
+		</div>
+						
+		
+		<footer th:replace="layout/dashboardLayout :: footer"></footer>
+	
+	<script>
+		$(document).ready(function() {
+			$(".dropdown-trigger").dropdown();
+			$("select").material_select();
+		})
+	</script>
+	</body>
+</html>

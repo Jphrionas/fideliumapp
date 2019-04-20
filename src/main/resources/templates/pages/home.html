@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+
+	<header th:replace="layout/dashboardLayout :: header"></header>
+
+	<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
+	<div th:if="${infoMessage}" th:text="${infoMessage}"></div>
+	
+	
+	<div class="container">
+		<span class="title" th:text="${title}"></span>
+		
+		<div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="col s12 m3">
+				<div class="card red lighten-2 white-text">
+					<div class="card-content">
+						<span class="card-title">Total of Admins</span>
+						
+						<p th:text="${homeModel.totalOfAdmins}">0</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col s12 m3">
+				<div class="card blue lighten-2 white-text">
+					<div class="card-content">
+						<span class="card-title">Total of Users</span>
+						<p th:text="${homeModel.totalOfUsers}">0</p>						
+					</div>
+				</div>
+			</div>
+			
+			<div class="col s12 m3">
+				<div class="card orange lighten-2 white-text">
+					<div class="card-content">
+						<span class="card-title">Total of Points</span>
+						<p th:text="${homeModel.totalOfPoints}">0</p>						
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="col s12 m3">
+				<div class="card blue lighten-2 white-text">
+					<div class="card-content">
+						<span class="card-title">Usuários Ativos</span>
+						<p th:text="${homeModel.usersActives}">0</p>						
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="col s12 m12">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Rewards</span>
+						<table class="light lighten">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Description</th>
+									<th>Pontos</th>
+								</tr>
+							</thead>
+							
+							
+							<tbody>
+								<tr th:each="rw: ${homeModel.rewardOfUser}">
+									<td th:text="${rw.rewardType}"></td>					
+									<td th:text="${rw.descricao}"></td>	
+									<td th:text="${rw.quantidadePontos}"></td>	
+								</tr>
+							</tbody>
+						</table>
+								
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		
+		<div class="row" th:if="${not #lists.isEmpty(homeModel.usersDisabled) }" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="col s12 m12">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Usuarios</span>
+						<table class="light lighten">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>E-mail</th>
+									<th>Cpf</th>
+									<th>Estado</th>
+									<th>Habilitado</th>
+									<th>Rewards</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<tr th:each="user :${homeModel.usersDisabled}">
+									<td th:text="${user.nome}">Nome</td>									
+									<td th:text="${user.email}">E-mail</td>
+									<td th:text="${user.cpf}">Cpf</td>
+									<td th:text="${user.estado}">Estado</td>
+									<td><a class="btn purple" th:href="@{/user/admin/habilitar} + ${user.publicId}" th:text="Habilitar"></a></td>
+									<td><a class="btn blue" th:href="@{/reward/} + ${user.publicId}+'/new'" th:text="Rewards"></a></td>
+								
+									
+								</tr>
+							</tbody>
+						</table>
+								
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+
+</html>

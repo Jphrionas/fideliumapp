@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+
+	<header th:replace="layout/dashboardLayout :: header"></header>
+
+	<div class="container">
+		<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
+		<div th:if="${infoMessage}" th:text="${sucessMessage}"></div>
+		<div th:if="${warningMessage}" th:text="${warningMessage}"></div>
+		<div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+		
+
+	<div class="row">
+		<div class="col s6">				
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" th:text="${title}"></span>
+					
+					<form th:method="POST" method="post" th:action="@{/user/new}" th:object="${user}">
+
+					<div class="row">
+						<div class="input-field col s6">
+							<label>Nome</label> 
+							<input type="text" th:field="*{nome}" />
+						</div>
+
+						<div class="input-field col s6">
+							<label>Senha</label> 
+							<input type="password" th:field="*{password}" />
+						</div>
+						<div class="input-field col s12">
+							<label>E-mail</label> <input type="text" th:field="*{email}" />
+						</div>
+	
+						<div class="input-field col s7">
+							<label>Cpf</label> 
+							<input type="text" th:field="*{cpf}" />
+						</div>
+	
+						<div class="input-field col s5">
+							<label>Estado</label> 
+							<input type="text" th:field="*{estado}" />
+						</div>
+						
+						<div class="input-field col s5">
+							<label>Dob</label> 
+							<input type="text" th:field="*{dob}" />
+						</div>
+	
+						<div class="input-field col s7">
+							<label>Celular</label>
+							<input type="text" th:field="*{celular}" />
+						</div>
+	
+						<div class="input-field col s12">
+							<select th:field="*{genero}">
+								<option th:value="'M'" th:text="Masculino"></option>
+								<option th:value="'F'" th:text="Feminino"></option>
+							</select>
+							<label>Genero</label> 
+						</div>
+						
+						
+						<div class="input-field col s12">
+							<select th:field="*{role.nome}">
+								<option th:each="role: ${roles}" th:value="${role.nome}" th:text="${role.nome}"></option>
+							</select>
+							<label>Permissao</label> 
+						</div>
+					</div>
+
+
+					<div>
+						<button class="btn green" type="submit">Enviar</button>
+					</div>
+				</form>
+								
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/dashboardLayout :: footer"></footer>
+	
+	<script>
+		$(document).ready(function() {
+			$(".dropdown-trigger").dropdown();
+			$("select").material_select();
+		})
+	</script>
+	
+</body>
+</html>
+

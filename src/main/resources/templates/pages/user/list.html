@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/dashboardLayout :: head"></head>
+<body>
+
+	<header th:replace="layout/dashboardLayout :: header"></header>
+	
+	<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
+	<div th:if="${infoMessage}" th:text="${sucessMessage}"></div>
+	
+	
+	<div class="container">	
+		<div class="card">
+		
+			<div class="card-content">
+				<span class="card-title">Usuários</span>
+				
+						<table class="table bordered highlight light">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>E-mail</th>
+					<th>Celular</th>
+					<th>Cpf</th>
+					<th>Estado</th>
+					<th>Editar</th>
+					<th>Remover</th>
+					<th>Reward</th>
+					<th>Profile</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user: ${users}">
+					<td th:text="${user.nome}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.celular}"></td>
+					<td th:text="${user.cpf}"></td>
+					<td th:text="${user.estado}"></td>
+					<td>
+						<a 	class="btn btn-icon blue" 
+							th:href="@{/user/edit/}+${user.publicId}" >
+							<i class="material-icons ">edit</i>	
+						</a>
+					</td>
+					
+					<td>
+						<a class="btn btn-icon red" th:href="@{/user/delete/}+${user.publicId}"><i class="material-icons ">delete </i></a>
+					</td>
+					<td><a class="btn btn-icon orange" th:href="@{/reward/}+${user.publicId} + '/new'" ><i class="material-icons">done </i></a></td>
+					<td><a class="btn btn-icon blue"   th:href="@{/user/admin/profile/} + ${user.publicId}" ><i class="material-icons">perm_identity</i></a></td>
+				</tr>
+			</tbody>
+		</table>
+				
+			</div>
+			
+			
+			<div class="card-action">
+				<a th:href="@{/user/new}" class="btn blue"> New User</a>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<footer th:replace="layout/dashboardLayout :: footer"></footer>
+	
+	<script>
+		$(document).ready(function() {
+			$(".dropdown-trigger").dropdown();
+			$("select").material_select();
+		})
+	</script>
+</body>
+
+</html>

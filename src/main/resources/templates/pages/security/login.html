@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="author" content="Alluminox Devellopers " />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	
+	
+	<style>
+		
+		.wrapper {
+		  width: 100vw;
+		  height: 100vh;
+		  
+		  position: absolute;
+		  background-color: #0090ff;
+		}
+		
+		.bg-one {
+		  width: 100vw;
+		  height: 70vh;
+		  max-height: 400px;
+		  background-color: #f9f9f9;
+		}		
+		
+		.card {
+		  border-radius: 2px;
+		  width: 100%;
+		  max-width: 400px;
+		  position: fixed;
+		  transform: translate(-50%, -50%);
+		  top: 50%;
+		  left: 50%;
+		
+		   box-shadow: 1px 3px 6px rgba(0,0,0,0.2);
+		}
+		
+		.card__content,
+		.card__footer {
+		  padding: 1.8rem 2.5rem;
+		}
+		
+		.card__header {
+		  padding: 2.5rem;
+		  text-transform: uppercase;
+		}
+		
+		.card__header {
+		  font-weight: 300;
+		  text-align: center;
+		  font-size: 1.7rem;
+		}
+		
+		label {
+		  display: block;
+		  margin-bottom: 2px;
+		  font-size: 1rem;
+		  color: #353535;
+		  font-weight: 300;
+		}
+		
+		input {
+		  display: block;
+		  width: 100%;
+		  padding: .76rem;
+		  border-radius: 2px;
+		  border: 1px solid #cecece;
+		  font-size: .92rem;
+		}
+		
+		.input-group:nth-child(1) {
+		  margin-bottom: 4rem;
+		}
+		
+		.card__footer button {
+		  width: 100%;
+		  padding: .82rem;
+		  border: none;
+		  background-color: #215cf2;
+		  color: #fff;
+		  font-weight: bold;
+		  font-size: 1rem;
+		  border-radius: 2px;
+		  box-shadow: 0 2px 4.76px rgba(0,0,0,.4);
+		  cursor: pointer;
+		  transition: all .2s;
+		  font-weight: 400;
+		  text-transform: uppercase;
+		}
+		
+		.card__footer button:hover {
+		  background-color: #1d4dc6;
+		}
+	
+	</style>
+</head>
+<body>
+
+	<div class="wrapper">
+		<div class="bg-one"></div>
+		<div class="card">
+			<form th:action=@{/login} method="post">
+				<div class="card__header">
+					<span>Sign In App</span>
+				</div>
+				
+				
+				<div class="card__content">
+					
+					<span th:if="${errorMessage}" th:text="${errorMessage}"></span>	
+					<span th:if="${infoMessage}" th:text="${infoMessage}"></span>
+				
+					<div class="input-group">
+						<label>E-mail</label> 
+						<input name="username" type="email" autofocus="autofocus" placeholder="Your email"
+							required="required"/>
+					</div>
+
+					<div class="input-group">
+						<label>Password</label>
+						<input name="password" type="password" placeholder="Your password	" required="required"/>
+					</div>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				</div>
+
+				<div class="card__footer">
+					<button type="submit" class="blue" value="Sign In" >Sign in</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+
+
+
+</body>
+
+</html>
