@@ -28,8 +28,8 @@ import br.com.alluminox.app.io.transform.request.UserRequestModel;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@SessionAttributes("user")
 @RequestMapping("/user")
+@SessionAttributes("user")
 @RequiredArgsConstructor(onConstructor=@__(@Autowired))
 public class UserController implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +46,16 @@ public class UserController implements Serializable {
 		model.addAttribute("users", this.userService.findUsersComum());
 		return "pages/user/list";
 	}
+
+	@GetMapping("/new")
+	@Transactional(readOnly=true)
+	public String formUser(UserRequestModel user,Model model ) {
+		model.addAttribute("user", user);
+		model.addAttribute("generos",Genero.values());
+		model.addAttribute("roles", roleService.findAll());
+		model.addAttribute("title", "Novo Usuário");
+		return "pages/user/form";
+	}
 	
 	@PostMapping("/new")
 	@Transactional
@@ -60,15 +70,7 @@ public class UserController implements Serializable {
 		return "redirect:/user";
 	}
 	
-	@GetMapping("/new")
-	@Transactional(readOnly=true)
-	public String formUser(UserRequestModel user,Model model ) {
-		model.addAttribute("user", user);
-		model.addAttribute("generos",Genero.values());
-		model.addAttribute("roles", roleService.findAll());
-		model.addAttribute("title", "Novo Usuário");
-		return "pages/user/form";
-	}
+
 	
 	@GetMapping("/admin/profile/{publicId}")
 	@Transactional(readOnly = true)

@@ -5,10 +5,6 @@
 
 	<header th:replace="layout/dashboardLayout :: header"></header>
 	
-	<div th:if="${successMessage}" th:text="${sucessMessage}"></div>
-	<div th:if="${infoMessage}" th:text="${sucessMessage}"></div>
-	
-	
 	<div class="container">	
 		<div class="card">
 		
@@ -44,7 +40,7 @@
 					</td>
 					
 					<td>
-						<form th:method="post" th:action="@{/user/} + ${user.publicId} + '/admin/remove'">
+						<form th:method="post" th:action="@{/user/admin/delete/}+${user.publicId}">
 							<button type="submit" onclick="return confirm('Deseja remover o user?')" class=" btn-icon btn red" >
 								<i class="material-icons">delete</i>
 							</button>

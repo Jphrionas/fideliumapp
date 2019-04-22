@@ -3,8 +3,6 @@ package br.com.alluminox.app.io.transform.request;
 import java.io.Serializable;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -30,8 +28,6 @@ public class UserRequestModel implements Serializable {
 	private String email;
 	
 	@NotBlank(message = "This field is mandatory")
-	@Min(value = 6, message = "This field required  min 6 caracters")
-	@Max(value = 16, message="This field required max 16 caracters")
 	private String password;
 	
 	@NotBlank(message="This field is mandatory")

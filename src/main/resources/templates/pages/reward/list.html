@@ -4,14 +4,12 @@
 <body>
 	<header th:replace="layout/dashboardLayout :: header"></header>
 	<div class="container">
-	<span th:if="${successMessage}" th:text="${sucessMessage}"></span>
-	<span th:if="${infoMessage}" th:text="${infoMessage}"></span>
 	
-		<div class="card" th:if="${!#lists.isEmpty(rewards)}">
+		<div class="card" >
 			<div class="card-content" >
-				<span class="card-title" th:text="${title}"></span>
+				<span class="card-title" th:text="${title} + ' ' + ${#authentication.principal.nome}"></span>
 				
-		<table class="light highlight" >
+		<table class="light highlight" th:if="${!#lists.isEmpty(rewards)}">
 			<thead>
 				<tr>
 					<th>Reward</th>

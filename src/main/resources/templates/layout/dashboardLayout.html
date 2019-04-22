@@ -121,6 +121,10 @@
 		</nav>
 	</header>
 	
+	<div th:if="${successMessage != null}" th:text="${sucessMessage}"></div>
+	<div th:if="${infoMessage != null}" th:text="${sucessMessage}"></div>
+	<div th:if="${warningMessage != null}" th:text="${warningMessage}"></div>
+	<div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 	
 	
 	<footer th:fragment="footer" class="container">

@@ -101,7 +101,7 @@ public class RewardController implements Serializable {
 	@Transactional
 	public String remover(@PathVariable("publicId") String publicId)  {// publicId do Reward
 		this.rewardService.delete(publicId);
-		return "redirect:/reward/" + publicId + "/list"; 
+		return "redirect:/home"; 
 	}
 	
 

@@ -33,15 +33,28 @@ public class HomeController implements Serializable {
 		
 		model.addAttribute("title", "Bem vindo ao sistema " + user.getNome());
 		
-		if(user.getRole().getNome().equals("ROLE_ADMIN"))
+		if(user.getRole().getNome().equals("ROLE_ADMIN")) {
 			model.addAttribute("homeModel", createHomeModel(user.getPublicId()));
+		} 
+		else {
+			
+			List<Reward> rewards = findRewardsList(user.getPublicId());
+			model.addAttribute("totalOfPoints", this.totalOfPoints(rewards));
+			model.addAttribute("rewards", rewards);
+			
+		}
 		
 		return "pages/home";
 	}
 	
+	
+	public List<Reward> findRewardsList(String publicId) {
+		return rewardService.fidAll(publicId);
+	}
+	
 	public HomeReponse createHomeModel(String publicId) {
 		HomeReponse homeModel = new HomeReponse();		
-		List<Reward> rewards = rewardService.fidAll(publicId);
+		List<Reward> rewards = findRewardsList(publicId);
 		List<User> users = userService.findAllUsers();
 			
 		users.forEach(user -> {
