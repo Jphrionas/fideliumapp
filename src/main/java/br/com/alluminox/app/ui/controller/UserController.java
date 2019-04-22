@@ -65,7 +65,6 @@ public class UserController implements Serializable {
 		this.userService.save(mapper.map(user, UserDTO.class));		
 		scope.addFlashAttribute("successMessage", String.format("Usuário %s foi salvo com sucesso!" , user.getNome()));
 		
-		
 		status.setComplete();
 		return "redirect:/user";
 	}
@@ -88,7 +87,7 @@ public class UserController implements Serializable {
 		}
 		
 		this.userService.enableUser(finded);
-		flash.addFlashAttribute("successMessage", "User was enabled!");
+		flash.addFlashAttribute("successMessage", "Usuário habilitado com sucesso!!");
 		
 		status.setComplete();
 		return "redirect:/user";
@@ -116,21 +115,23 @@ public class UserController implements Serializable {
 	
 	@GetMapping("edit/{publicId}") 
 	@Transactional(readOnly=true)
-	public String edit(@PathVariable("publicId") String publicId, Model model) {
+	public String edit(@PathVariable("publicId") String publicId, Model model, RedirectAttributes flash) {
 		User user = this.userService.findByPublicId(publicId);
 		
 		if(user != null) {
 			return this.formUser(mapper.map(user, UserRequestModel.class), model);
 		}
 		
+		flash.addFlashAttribute("successMessage", "O usuário editado com sucesso!");
 		return "redirect:/user/new";
 			
 	}
 	
 	@PostMapping("/admin/delete/{publicId}")
 	@Transactional
-	public String remover(@PathVariable("publicId") String publicId, Model model) {
+	public String remover(@PathVariable("publicId") String publicId, Model model, RedirectAttributes flash) {
 		this.userService.remove(publicId);
+		flash.addFlashAttribute("successMessage", "O usuário foi desabilitado");
 		return "redirect:/user";
 	}
 

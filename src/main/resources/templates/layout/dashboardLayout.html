@@ -83,6 +83,7 @@
 <body>
 
 	<header th:fragment="header">
+
 	
 		<ul id="dropdown1" class="dropdown-content">
 			<li><a th:href="@{/user/profile/} +${#authentication.principal.publicId}">Profile</a></li>
@@ -119,12 +120,13 @@
 				</ul>
 			</div>
 		</nav>
+		
+			
+		<div th:if="${successMessage != null}" th:text="${successMessage}" class="green white-text light-1"></div>
+		<div th:if="${warningMessage != null}" th:text="${warningMessage}" class="orange white-text light-1"></div>
+		<div th:if="${errorMessage != null}" th:text="${errorMessage}" class="red white-text light-1"></div>
 	</header>
-	
-	<div th:if="${successMessage != null}" th:text="${sucessMessage}"></div>
-	<div th:if="${infoMessage != null}" th:text="${sucessMessage}"></div>
-	<div th:if="${warningMessage != null}" th:text="${warningMessage}"></div>
-	<div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
 	
 	
 	<footer th:fragment="footer" class="container">

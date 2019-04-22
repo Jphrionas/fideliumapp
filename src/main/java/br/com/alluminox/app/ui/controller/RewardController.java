@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.alluminox.app.data.model.Reward;
 import br.com.alluminox.app.data.model.User;
@@ -71,7 +72,7 @@ public class RewardController implements Serializable {
 	
 	@PostMapping("new")
 	@Transactional
-	public String createReward(@PathVariable("publicId") String publicId, Reward reward, SessionStatus status,
+	public String createReward(@PathVariable("publicId") String publicId, Reward reward, RedirectAttributes flash,SessionStatus status,
 			Authentication authentication) { 
 		
 		if(UserAction.isUserLogged(publicId, authentication) || 
@@ -86,6 +87,7 @@ public class RewardController implements Serializable {
 			rewardService.save(reward);
 		}
 		
+		flash.addFlashAttribute("successMessage", "Reward saved");
 		status.setComplete();
 		return "redirect:/reward/" + publicId  + "/list" ;
 	}
@@ -93,7 +95,6 @@ public class RewardController implements Serializable {
 	@GetMapping("edit")
 	@Transactional
 	public String edit() {
-		
 		return "redirect:/home";
 	}
 	
