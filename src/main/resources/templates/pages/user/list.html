@@ -44,9 +44,13 @@
 					</td>
 					
 					<td>
-						<a class="btn btn-icon red" th:href="@{/user/delete/}+${user.publicId}"><i class="material-icons ">delete </i></a>
+						<form th:method="post" th:action="@{/user/} + ${user.publicId} + '/admin/remove'">
+							<button type="submit" onclick="return confirm('Deseja remover o user?')" class=" btn-icon btn red" >
+								<i class="material-icons">delete</i>
+							</button>
+						</form>
 					</td>
-					<td><a class="btn btn-icon orange" th:href="@{/reward/}+${user.publicId} + '/new'" ><i class="material-icons">done </i></a></td>
+					<td><a class="btn btn-icon orange" th:href="@{/reward/}+${user.publicId} + '/list'" ><i class="material-icons">done </i></a></td>
 					<td><a class="btn btn-icon blue"   th:href="@{/user/admin/profile/} + ${user.publicId}" ><i class="material-icons">perm_identity</i></a></td>
 				</tr>
 			</tbody>

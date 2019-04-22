@@ -51,10 +51,10 @@ public class UserController implements Serializable {
 	@Transactional
 	public String newUser(@Valid UserRequestModel user, BindingResult result , Model model, SessionStatus session, RedirectAttributes scope) {
 		if(result.hasErrors()) return "pages/user/form";
-
-		this.userService.save(mapper.map(user, UserDTO.class));
 		
+		this.userService.save(mapper.map(user, UserDTO.class));
 		scope.addFlashAttribute("successMessage", String.format("Usuário %s foi salvo com sucesso!" , user.getNome()));
+		session.setComplete();
 		return "redirect:/user";
 	}
 	
@@ -73,6 +73,22 @@ public class UserController implements Serializable {
 	public String viewProfileAdmin(@PathVariable("publicId") String publicId, Model model, Authentication authentication) {
 		findUser(publicId, model);
 		return "pages/user/profile";
+	}
+	
+	@PostMapping("/admin/enable/{publicId}")
+	@Transactional
+	public String habilitar(@PathVariable("publicId") String publicId, Model model, RedirectAttributes flash, SessionStatus status) {
+		User finded = this.userService.findUserDisabled(publicId);
+		if(finded == null) {
+			return "redirect:/home";
+		}
+		
+		this.userService.enableUser(finded);
+		flash.addFlashAttribute("successMessage", "User was enabled!");
+		
+		status.setComplete();
+		return "redirect:/user";
+		
 	}
 	
 	@GetMapping("/profile/{publicId}")
@@ -107,7 +123,7 @@ public class UserController implements Serializable {
 			
 	}
 	
-	@GetMapping("delete/{publicId}")
+	@PostMapping("/admin/delete/{publicId}")
 	@Transactional
 	public String remover(@PathVariable("publicId") String publicId, Model model) {
 		this.userService.remove(publicId);

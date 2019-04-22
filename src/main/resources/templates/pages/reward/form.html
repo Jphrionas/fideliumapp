@@ -20,7 +20,7 @@
 		
 			<div class="col s6 ">
 		
-				<form  method="post" 
+				<form  th:method="post" 
 					th:action="@{/reward/} + ${reward.user.publicId} + '/new'" 
 					th:object="${reward}">
 					

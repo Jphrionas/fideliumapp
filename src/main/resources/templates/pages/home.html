@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		
-		<div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+		<div class="row" sec:authorize="hasRole('ROLE_ADMIN')" th:if="${not #lists.isEmpty(homeModel.rewardOfUser) }" >
 			<div class="col s12 m12">
 				<div class="card">
 					<div class="card-content">
@@ -107,8 +107,12 @@
 									<td th:text="${user.email}">E-mail</td>
 									<td th:text="${user.cpf}">Cpf</td>
 									<td th:text="${user.estado}">Estado</td>
-									<td><a class="btn purple" th:href="@{/user/admin/habilitar} + ${user.publicId}" th:text="Habilitar"></a></td>
-									<td><a class="btn blue" th:href="@{/reward/} + ${user.publicId}+'/new'" th:text="Rewards"></a></td>
+									<td>
+										<form th:action="@{/user/admin/enable/} + ${user.publicId}" th:method="post">
+											<button type="submit" class="btn purple" th:text="Habilitar"></button>
+										</form>
+									</td>
+									<td><a class="btn blue" th:href="@{/reward/} + ${user.publicId}+'/list'" th:text="Rewards"></a></td>
 								
 									
 								</tr>

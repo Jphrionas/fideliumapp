@@ -9,4 +9,8 @@ public class UserAction {
 	public static boolean isUserLogged(String publicId, Authentication authentication) {		
 		return ((User) authentication.getPrincipal()).getPublicId().equals(publicId);
 	}
+	
+	public static boolean isUserAdmin(Authentication authentication) {		
+		return ((User) authentication.getPrincipal()).getRole().getNome().equals("ROLE_ADMIN");
+	}
 }

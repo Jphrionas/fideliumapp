@@ -75,20 +75,19 @@ public class RewardController implements Serializable {
 	public String createReward(@PathVariable("publicId") String publicId, Reward reward, SessionStatus status,
 			Authentication authentication) { 
 		
-		if(UserAction.isUserLogged(publicId, authentication)) {
+		if(UserAction.isUserLogged(publicId, authentication) || 
+				UserAction.isUserAdmin(authentication)) {
 			
-			User user = userService.findByPublicId(publicId);
+					User user = userService.findByPublicId(publicId);
 			if(user == null) {
 				return "redirect:/user";
 			}
 			
-			
 			reward.setUser(user);
 			rewardService.save(reward);
-			status.setComplete();
-			
 		}
 		
+		status.setComplete();
 		return "redirect:/reward/" + publicId  + "/list" ;
 	}
 	

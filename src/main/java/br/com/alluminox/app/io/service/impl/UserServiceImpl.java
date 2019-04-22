@@ -117,4 +117,15 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.findByEmail(email);
 		
 	}
+
+	@Override
+	public User findUserDisabled(String publicId) {
+		return this.userRepository.findUserDisabled(publicId);
+	}
+
+	@Override
+	public void enableUser(User user) {
+		user.setDisabled(false);
+		this.userRepository.save(user);
+	}
 }

@@ -19,4 +19,6 @@ public interface UserService extends  UserDetailsService, Serializable {
 	void remove(String publicId);
 	User findByEmail(String username);
 	List<User> findAllUsers();
+	User findUserDisabled(String publicId);
+	void enableUser(User user);
 }

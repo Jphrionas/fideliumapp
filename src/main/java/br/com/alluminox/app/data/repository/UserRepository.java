@@ -37,4 +37,11 @@ public interface UserRepository extends  PagingAndSortingRepository<User, Long> 
 	
 	@Query("select u from User u join fetch u.role r where u.email = ?1 and u.disabled = false")
 	User findByEmail(String email);
+	
+	@Query("select u from User u join fetch u.role r where u.disabled = true and u.publicId = ?1")
+	User findUserDisabled(String publicId);
+	
+	@Modifying
+	@Query("update User u set u.disabled = false where u.publicId = ?1")
+	void enableUser(String publicId);
 }
