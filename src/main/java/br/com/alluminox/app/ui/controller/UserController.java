@@ -28,7 +28,7 @@ import br.com.alluminox.app.io.transform.request.UserRequestModel;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@SessionAttributes({"user"})
+@SessionAttributes("user")
 @RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor=@__(@Autowired))
 public class UserController implements Serializable {
@@ -49,19 +49,21 @@ public class UserController implements Serializable {
 	
 	@PostMapping("/new")
 	@Transactional
-	public String newUser(@Valid UserRequestModel user, BindingResult result , Model model, SessionStatus session, RedirectAttributes scope) {
-		if(result.hasErrors()) return "pages/user/form";
+	public String newUser(@Valid UserRequestModel user, BindingResult result , Model model, RedirectAttributes scope, SessionStatus status) {
+		if(result.hasErrors()) return formUser(user, model);
 		
-		this.userService.save(mapper.map(user, UserDTO.class));
+		this.userService.save(mapper.map(user, UserDTO.class));		
 		scope.addFlashAttribute("successMessage", String.format("Usuário %s foi salvo com sucesso!" , user.getNome()));
-		session.setComplete();
+		
+		
+		status.setComplete();
 		return "redirect:/user";
 	}
 	
 	@GetMapping("/new")
 	@Transactional(readOnly=true)
-	public String formUser(UserRequestModel user,Model model) {
-		model.addAttribute("user",user);
+	public String formUser(UserRequestModel user,Model model ) {
+		model.addAttribute("user", user);
 		model.addAttribute("generos",Genero.values());
 		model.addAttribute("roles", roleService.findAll());
 		model.addAttribute("title", "Novo Usuário");

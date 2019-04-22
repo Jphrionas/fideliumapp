@@ -2,6 +2,13 @@ package br.com.alluminox.app.io.transform.request;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import br.com.alluminox.app.data.model.Genero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,14 +20,36 @@ import lombok.ToString;
 public class UserRequestModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private String publicId;
+	
+	@NotEmpty(message = "This field is mandatory")
 	private String nome;
+	
+	@NotEmpty(message = "This field is mandatory")
+	@Email(message="This e-mail is not valid, example: email@email.com")
 	private String email;
+	
+	@NotBlank(message = "This field is mandatory")
+	@Min(value = 6, message = "This field required  min 6 caracters")
+	@Max(value = 16, message="This field required max 16 caracters")
 	private String password;
+	
+	@NotBlank(message="This field is mandatory")
 	private String cpf;
+	
+	@NotBlank(message="This field is mandatory")
 	private String estado;
+	
+	@NotBlank(message="This field is mandatory")
 	private String dob;
+	
+	@NotNull(message="This field is mandatory")
 	private Genero genero;
+	
+	@NotBlank(message="This field is mandatory")
 	private String celular;
+	
+	@NotNull(message="This field is mandatory")
 	private RoleRequestModel role;
 	
 	public UserRequestModel() {

@@ -56,7 +56,7 @@ public class RewardController implements Serializable {
 	
 	@GetMapping("list")
 	@Transactional(readOnly=true)
-	public String rewards(@PathVariable("publicId") String publicId, Reward reward, Model model) {
+	public String rewards(@PathVariable("publicId") String publicId, Model model) {
 		User user = userService.findByPublicId(publicId);
 		if(user == null) {
 			return "redirect:/user";
@@ -64,8 +64,7 @@ public class RewardController implements Serializable {
 
 		model.addAttribute("title", "Listando Rewards");
 		model.addAttribute("rewards", this.rewardService.fidAll(publicId));
-			
-		System.out.println(this.rewardService.fidAll(publicId));
+		model.addAttribute("user", user);
 		return "pages/reward/list";
 	}
 

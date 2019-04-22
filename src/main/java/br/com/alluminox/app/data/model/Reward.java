@@ -16,6 +16,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import br.com.alluminox.app.util.GeneratorPublicId;
 import lombok.Data;
@@ -36,14 +37,17 @@ public class Reward implements Serializable {
 	@EqualsAndHashCode.Include
 	private Long id;
 	
+	@NotNull(message="This field is mandatory")
 	@Column(name="public_id")
 	private String publicId;
 	
+	@NotNull(message="This field is mandatory")
 	@Column(name="reward_type")
 	private String rewardType;
 	
 	private String descricao;
-	
+
+	@NotNull(message="This field is mandatory")
 	@Column(name="qtd_pontos")
 	private Integer quantidadePontos;
 	

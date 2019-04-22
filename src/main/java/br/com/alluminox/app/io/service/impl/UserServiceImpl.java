@@ -35,30 +35,28 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User save(UserDTO userDTO) {
-		
-		User userDB = findByCpfOrEmail(userDTO.getCpf(), userDTO.getEmail());
 		Role role = roleService.findByName(userDTO.getRole().getNome());
 		String password = this.encryptPass(userDTO.getPassword());
-		if(userDB == null) {
-			User userSave = mapper.map(userDTO, User.class);
+		
+		User userSave = findByCpfOrEmail(userDTO.getCpf(), userDTO.getEmail());
+		
+		if(userSave == null) {
+			userSave = mapper.map(userDTO, User.class);
 			userSave.setRole(role);
 			userSave.setPassword(password);						
-			return userRepository.save(userSave);			
+		}else {
+			userSave.setRole(role);
+			userSave.setPassword(password);			
+			userSave.setNome(userDTO.getNome());
+			userSave.setEmail(userDTO.getEmail());
+			userSave.setCelular(userDTO.getCelular());
+			userSave.setCpf(userDTO.getCpf());
+			userSave.setEstado(userDTO.getEstado());
+			userSave.setDob(userDTO.getDob());
+			userSave.setGenero(userDTO.getGenero());
 		}
 		
-		userDB.setRole(role);
-		userDB.setNome(userDTO.getNome());
-		userDB.setEmail(userDTO.getEmail());
-		userDB.setPassword(password);
-		userDB.setCelular(userDTO.getCelular());
-		userDB.setCpf(userDB.getCpf());
-		userDB.setEstado(userDB.getEstado());
-		userDB.setDob(userDB.getDob());
-		userDB.setGenero(userDB.getGenero());
-		
-		return userDB;
-		
-		
+		return this.userRepository.save(userSave);
 	}
 	
 	protected String encryptPass(String password) {

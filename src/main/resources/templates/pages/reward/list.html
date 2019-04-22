@@ -36,8 +36,12 @@
 		</table>
 				
 			</div>
+			
+			
 			<div class="card-action">
-				<a th:if="${reward.disabled}" class="btn blue"  th:href="@{/reward/} + ${reward.publicId} + '/new'" th:text="'New Reward'"></a>
+				<a th:if="${not user.disabled}" class="btn blue"  
+				th:href="@{/reward/} + ${user.publicId} + '/new'" 
+				th:text="'New Reward'"></a>
 			</div>
 		</div>		
 	</div>	
